@@ -1,0 +1,11 @@
+class: edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.OverlapAnnotator
+A_ObjectClass: org.oaqa.model.nlp.LookupWindowAnnotation
+B_ObjectClass: org.oaqa.model.nlp.LookupWindowAnnotation
+OverlapType: A_ENV_B
+ActionType: DELETE
+CreateAction: 
+ModifyAction: 
+DeleteAction: ['selector=B']
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

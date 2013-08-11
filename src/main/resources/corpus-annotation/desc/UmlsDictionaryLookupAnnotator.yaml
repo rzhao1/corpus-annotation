@@ -1,0 +1,16 @@
+class:  edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.UmlsDictionaryLookupAnnotator
+maxListSize: 2147483647
+umlsaddr: https://uts-ws.nlm.nih.gov/restful/isValidctakes.umlsuser
+umlsvendor: NLM-6515182895
+umlsuser: ranzhao1 
+umlspw: Eric1-team
+
+
+LookupDescriptor: corpus-annotation/desc/LookupDesc_Db.xml 
+#/Users/ranzhao/Downloads/apache-ctakes-3.0.0-incubating-src/ctakes-dictionary-lookup/resources/org/apache/ctakes/dictionary/lookup/LookupDesc.xml
+DbConnection: org/apache/ctakes/core/resource/JdbcConnectionResource
+RxnormIndexReader: org/apache/ctakes/core/resource/LuceneIndexReaderResource
+OrangeBookIndexReader: org/apache/ctakes/core/resource/LuceneIndexReaderResource
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

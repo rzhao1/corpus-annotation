@@ -1,0 +1,8 @@
+class: edu.cmu.lti.oaqa.framework.collection.FileSystemCollectionReader
+
+Language: en
+BrowseSubdirectories: FALSE
+Encoding: UTF-8 
+
+persistence-provider: |
+  inherit: ecd.default-experiment-persistence-provider

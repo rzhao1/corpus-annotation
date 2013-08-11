@@ -1,0 +1,12 @@
+class:  edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.DictionaryLookupAnnotator
+maxListSize: 2147483647
+LookupDescriptor: /Users/ranzhao/git/corpus-annotation/src/main/resources/corpus-annotation/desc/LookupDesc.xml 
+#/Users/ranzhao/Downloads/apache-ctakes-3.0.0-incubating-src/ctakes-dictionary-lookup/resources/org/apache/ctakes/dictionary/lookup/LookupDesc.xml
+
+UmlsIndexReader: /Users/ranzhao/Downloads/apache-ctakes-3.0.0-incubating-src/ctakes-core/src/main/java/org/apache/ctakes/core/resource/LuceneIndexReaderResource
+CodesListIndexDirectory: /Users/ranzhao/Downloads/apache-ctakes-3.0.0-incubating-src/ctakes-core/src/main/java/org/apache/ctakes/core/resource/FileResource
+RxnormIndexReader: /Users/ranzhao/Downloads/apache-ctakes-3.0.0-incubating-src/ctakes-core/src/main/java/org/apache/ctakes/core/resource/LuceneIndexReaderResource
+OrangeBookIndexReader: /Users/ranzhao/Downloads/apache-ctakes-3.0.0-incubating-src/ctakes-core/src/main/java/org/apache/ctakes/core/resource/LuceneIndexReaderResource
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

@@ -1,0 +1,7 @@
+class:  edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.POSTagger
+PosModelFile: org/apache/ctakes/postagger/models/mayo-pos.zip
+CaseSensitive: True
+TagDictionary: org/apache/ctakes/postagger/models/tag.dictionary.txt
+ 
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

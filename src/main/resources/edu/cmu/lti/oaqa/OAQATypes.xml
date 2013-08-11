@@ -3,43 +3,1228 @@
   <name>OAQATypes</name>
   <description>Type system descriptor for the OAQA data model.
 
-$Id:$</description>
-  <version>0.1</version>
+Changes in 2.4:
+* Added super types from NEAL project: Concept and ConceptMention.
+* Added Entity type, inherited from Concept.
+* Added RelationMention, inherited from ConceptMention.
+* NamedEntity is now renamed to EntityMention, and inherited from ConceptMention. Moved ids field to Concept.
+* Triple type is generalized and renamed to Relation. Subject, object, and other fields are replaced with arguments field.
+* TripleStore search result is updated to RelationBaseSearchResult, which is now based on Relation instead of Triple.
+* PassageFromTriple is updated to PassageFromRelation.
+* Field namedEntities is removed from Parse type.
+* Added new container type Interpretation to integrate Concepts and ConceptMentions.
+* Predicate type now renamed to Token.
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
+
+Changes in 0.2.3:
+* Added new type Parse to aggregate NLP annotations, e.g. predicates, named entities, semantic roles.
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
+
+Changes in 0.2.2:
+* Merged annotation QuestionClass with Question, and rebased Question on GerpAnnotation instead of InputElement.
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
+
+Changes in 0.2.1:
+* Brought AnswerList and Search back to type system from version 0.1.
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
+
+Changes in 0.2:
+* Grouped types into packages: answer, retrieval, nlp, input, gerp, core
+* Added GERP related types: GerpMeta, GerpBase, GerpTop, GerpAnnotation, Evidence, Rank, PruningDecision
+* Removed probability and componentId from OAQATop and OAQAAnnotation. Components (can be multiple) that generate the FSs need to be specified in the generators field of GerpTop or GerpAnnotation, and the probability should be given in the associated evidences or ranks fields.
+* Simplified types, e.g. Answer, CandidateAnswerVariant, and SearchResult. Features can be represented by those in GerpTop/GerpAnnotation. For example, searchResultList or supportingEvidenceSearches can be represented in additionalEvidences field of Evidence, and features or featureVectors are naturally the combination of confidence in the Evidence, rankVector can be represented by Ranks. 
+* Removed list types, e.g. AnswerList and Search. The common meta information will be stored in the GerpMeta. For example, featureLabels are stored in the evidencers field.
+* Removed feature types, e.g. CandidateAnswerFeature (formerly CaFeature). They are mostly Evidences.
+* Updated superclass of most types from OAQATop/OAQAAnnotation to GerpTop/GerpAnnotation, e.g. QuestionClass
+* Added an imported type system frameworkTypesDescriptor, and updated the supertype of Question to InputElement.
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;</description>
+  <version>2.4</version>
   <vendor>OAQA</vendor>
   <types>
     <typeDescription>
-      <name>org.oaqa.model.OAQATop</name>
+      <name>org.oaqa.model.core.OAQATop</name>
       <description>The base class for OAQA feature structures that are not Annotations.</description>
       <supertypeName>uima.cas.TOP</supertypeName>
       <features>
         <featureDescription>
-          <name>componentId</name>
-          <description>The unique id of the component that created this instance.</description>
+          <name>implementingWrapper</name>
+          <description>The name of the Java wrapper class that enables more convenient methods for the original derived Java class.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.core.OAQAAnnotation</name>
+      <description>The Question Analysis supertype that defines the attributes common to all question analysis results.</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>implementingWrapper</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.Token</name>
+      <description>Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock</description>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>arguments</name>
+          <description>The arguments</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.nlp.Token</elementType>
+          <multipleReferencesAllowed>false</multipleReferencesAllowed>
+        </featureDescription>
+        <featureDescription>
+          <name>argumentLabels</name>
+          <description>The slot labels for the arguments (e.g., subj, obj, objprep)</description>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>parse</name>
+          <description>A parse for which this token was a head (if any)</description>
+          <rangeTypeName>org.oaqa.model.nlp.Token</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>semanticType</name>
+          <description>A semantic type, typically the name of an Entity Annotation type</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>probability</name>
-          <description>The annotator's estimate of the probability associated with this annotation.</description>
+          <name>partOfSpeech</name>
+          <description>Coarse-grained part of speech --- Example: noun, verb, adj, cord</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>lemmaForm</name>
+          <description>A canonical/lemmatized form of the covered text</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>isMainReference</name>
+          <description>If true, then this is the main reference to the first argument.  Modifiers and anaphoric references do not have isMainReference set. --- Example: "A dark blue [hat]"</description>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>isVariable</name>
+          <description>True iff the token expresses some unknown entity, typically the focus of a question:  --- Example: "[Who] shot JR?", "What [city] was JR born in?"</description>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>determiner</name>
+          <description>The determiner attached to the node, if any --- Example: [the] book</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>lemmaEntries</name>
+          <description/>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.Lemma</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>tokenType</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.Focus</name>
+      <description>The phrase in the question that indicates the answer variable.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>token</name>
+          <description>The corresponding token for the focus.</description>
+          <rangeTypeName>org.oaqa.model.nlp.Token</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>label</name>
+          <description>String representation of the Question Focus.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.LexicalAnswerType</name>
+      <description>The lexical answer type found in the question.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>token</name>
+          <description>The corresponding token for the LAT.</description>
+          <rangeTypeName>org.oaqa.model.nlp.Token</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>label</name>
+          <description>The normalized LAT string.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.AnswerType</name>
+      <description>A Named Entity type that represents the type of the answer being sought.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>label</name>
+          <description>An answer type identified for the question.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>targetType</name>
+          <description>The actual target type annotation.</description>
+          <rangeTypeName>uima.tcas.Annotation</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.SemanticRole</name>
+      <description>A semantic role label.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>label</name>
+          <description>The semantic role label.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>relation</name>
+          <description/>
+          <rangeTypeName>org.oaqa.model.kb.RelationMention</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.input.Question</name>
+      <description>The Question and any associated meta-data.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>id</name>
+          <description>A unique id for the question.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>source</name>
+          <description>The source of the question, e.g., TREC11, Jeopardy, etc.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>questionType</name>
+          <description>The class of the question, determined by either an automatic question classification process or human judgment.</description>
+          <rangeTypeName>org.oaqa.model.input.QuestionType</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>text</name>
+          <description>The question content.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.SearchResult</name>
+      <description>A search result.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>uri</name>
+          <description>An identifier for the source of this search result, e.g., the name of the file that this result is drawn from, which, when combined with offset and length, uniquely identifies the span of text for this result.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>score</name>
+          <description>Relevance score associated with the search result.</description>
+          <rangeTypeName>uima.cas.Float</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>text</name>
+          <description>The text associated with the hit.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>rank</name>
+          <description>Rank of this result in the original hit-list.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>queryString</name>
+          <description>The query string associated with the hit.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>searchId</name>
+          <description>ID of the search object to which this search result belongs (matches the searchId field in the Search object).</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>candidateAnswers</name>
+          <description>CandidateAnswerVariants generated from this SearchResult.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.answer.CandidateAnswerVariant</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.answer.Answer</name>
+      <description>An answer generated by the QA system.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>text</name>
+          <description>The actual answer string.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>variants</name>
+          <description>Array of candidate answer variant ids that were merged into this final answer.</description>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.Passage</name>
+      <description>A passage search result.</description>
+      <supertypeName>org.oaqa.model.retrieval.SearchResult</supertypeName>
+      <features>
+        <featureDescription>
+          <name>title</name>
+          <description>The title of the document that contains this passage.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>docId</name>
+          <description>A unique identifier for the document that conatins this passage.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>begin</name>
+          <description>Character offset of the start of this passage within the document that contains this passage.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>end</name>
+          <description>Character offset of the end of this passage within the document that contains this passage.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>aspects</name>
+          <description>Aspects of the gold standard passage.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.CandidateAnswerOccurrence</name>
+      <description>Annotates a span of text identified as a candidate answer.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>text</name>
+          <description>The candidate answer string.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>mentionType</name>
+          <description>The manner in which covered text refers to some entity, e.g.  NAME, NOMINAL, PRONOUN</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.answer.CandidateAnswerVariant</name>
+      <description>A variant of a candidate answer.  A variant may have multiple occurrences, all of which are collected in a variant object.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>occurrences</name>
+          <description>The occurrences of this variant.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.nlp.CandidateAnswerOccurrence</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>candidateId</name>
+          <description>Unique id of this candidate answer variant.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>text</name>
+          <description>The candidate answer string.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>alternativeNames</name>
+          <description>alternative names for a given candidate answer variant, e.g. Tandy, Tandy Inc. for candidate answer Variant Tandy Incorporated</description>
+          <rangeTypeName>uima.cas.StringList</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>uri</name>
+          <description>A unique identifier for this candidate.  All candidate answers in the same candidate answer group will have the same uri.  A candidate answer group is formed at candidate generation time when additional derived candidate answers are created from the root candidate answer.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>docId</name>
+          <description>The unique id of the document (if any) from which this candidate answer was generated.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.input.QuestionType</name>
+      <description>Enumeration of the possible values for the question class.</description>
+      <supertypeName>uima.cas.String</supertypeName>
+      <allowedValues>
+        <value>
+          <string>FACTOID</string>
+          <description>A question about a fact that can be "looked up".</description>
+        </value>
+        <value>
+          <string>DEFINITION</string>
+          <description>A question that contains a definition of the answer or is asking for a definition.</description>
+        </value>
+        <value>
+          <string>MULTI_SENTENCE</string>
+          <description>There are two or more sentences in the question, separated by a period or a semicolon.</description>
+        </value>
+        <value>
+          <string>COMPOUND</string>
+          <description>There are two or more distinct definitions of the same answer term.</description>
+        </value>
+        <value>
+          <string>ABBREVIATION</string>
+          <description>The answer is either an abbreviation or an abbreviation expansion from the question.</description>
+        </value>
+        <value>
+          <string>UNCLASSIFIED</string>
+          <description>No class was assigned to this question.</description>
+        </value>
+        <value>
+          <string>LIST</string>
+          <description>The answer to the question is a list of things.</description>
+        </value>
+        <value>
+          <string>OPINION</string>
+          <description>The question is asking for an opinion.</description>
+        </value>
+      </allowedValues>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.QueryConcept</name>
+      <description>A query concept in the abstract search query model.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>namedEntityTypes</name>
+          <description>List of Named Entity types associated with this concept.</description>
+          <rangeTypeName>uima.cas.StringList</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>conceptType</name>
+          <description>The type of this concept.</description>
+          <rangeTypeName>org.oaqa.model.nlp.ConceptType</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>text</name>
+          <description>The keyword text.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>originalText</name>
+          <description>The lexical string in the question.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>operator</name>
+          <description>The operator associated with this concept.  This must be a complex concept.</description>
+          <rangeTypeName>org.oaqa.model.retrieval.QueryOperator</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>operatorArgs</name>
+          <description>The operator arguments in a complex query concept.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.QueryConcept</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>partOfSpeech</name>
+          <description>The part of speech of the concept.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.QueryOperator</name>
+      <description>A query operator in the abstract search query model.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>name</name>
+          <description>The name (kind) of the operator.</description>
+          <rangeTypeName>org.oaqa.model.retrieval.QueryOperatorName</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>args</name>
+          <description>The arguments for the operator.</description>
+          <rangeTypeName>uima.cas.StringList</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.AbstractQuery</name>
+      <description>An abstract search query for the question that represents query concepts and query operators over those concepts.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>concepts</name>
+          <description>The list of query concepts that make up this abstract query.  The list is ordered.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.QueryConcept</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.ConceptType</name>
+      <description>An enumeration of the allowed abstract query concept types.</description>
+      <supertypeName>uima.cas.String</supertypeName>
+      <allowedValues>
+        <value>
+          <string>KEYWORD_TYPE</string>
+          <description>Simple concept.</description>
+        </value>
+        <value>
+          <string>QATOKEN_TYPE</string>
+          <description>QA-Token concept.</description>
+        </value>
+        <value>
+          <string>ANSWER_TYPE</string>
+          <description>Answer candidate suggestion, used mostly in Virtual Annotation.</description>
+        </value>
+      </allowedValues>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.QueryOperatorName</name>
+      <description>An enumeration of the allowed query operator names.</description>
+      <supertypeName>uima.cas.String</supertypeName>
+      <allowedValues>
+        <value>
+          <string>SYNONYM</string>
+          <description>all query concepts underneath are synonyms of each other</description>
+        </value>
+        <value>
+          <string>PHRASE</string>
+          <description>all query concepts in order are a phrase</description>
+        </value>
+        <value>
+          <string>TIE</string>
+          <description>An "or", i.e., a disjunction of the argument nodes.</description>
+        </value>
+        <value>
+          <string>WEIGHT</string>
+          <description>the concepts underneath are weighted per the float stored in the operator</description>
+        </value>
+        <value>
+          <string>REQUIRED</string>
+          <description>the concepts underneath are all required, if possible</description>
+        </value>
+        <value>
+          <string>RELATION</string>
+          <description>the concepts underneath are below a relation, which is stored within the operator</description>
+        </value>
+        <value>
+          <string>QUOTEDPHRASE</string>
+          <description/>
+        </value>
+      </allowedValues>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.Document</name>
+      <description>A document search result.</description>
+      <supertypeName>org.oaqa.model.retrieval.SearchResult</supertypeName>
+      <features>
+        <featureDescription>
+          <name>title</name>
+          <description>The title of the document.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>docId</name>
+          <description>A unique identifier for this document.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.AnswerSearchResult</name>
+      <description>A search result where the candidate answer is obtained as part of the search process and saved in the text field of the search result.</description>
+      <supertypeName>org.oaqa.model.retrieval.SearchResult</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.RelationSearchResult</name>
+      <description>A search result from a triple store, e.g., an RDF store.</description>
+      <supertypeName>org.oaqa.model.retrieval.AnswerSearchResult</supertypeName>
+      <features>
+        <featureDescription>
+          <name>context</name>
+          <description>The context of the triple store search result, i.e., triples identifying all neighboring nodes in the store.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.kb.Relation</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.Relation</name>
+      <description>A relation concept. It represents the relationship between entities. which is generalized from a triple, e.g., and RDF triple.</description>
+      <supertypeName>org.oaqa.model.kb.Concept</supertypeName>
+      <features>
+        <featureDescription>
+          <name>arguments</name>
+          <description>Arguments of type Entity of the relation.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.Entity</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.EntityMention</name>
+      <description>A named entity mention that identify or define the named entity concept.</description>
+      <supertypeName>org.oaqa.model.kb.ConceptMention</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.PassageFromRelation</name>
+      <description>A passage search result that was the result of a search from the subject and object of a triple</description>
+      <supertypeName>org.oaqa.model.retrieval.Passage</supertypeName>
+      <features>
+        <featureDescription>
+          <name>sourceRelation</name>
+          <description>The triple from which the search result was generated</description>
+          <rangeTypeName>org.oaqa.model.kb.Relation</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.gerp.GerpTop</name>
+      <description>The base class for Gerp feature structures that are not Annotations, with G/E/E/P features defined.</description>
+      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>generators</name>
+          <description>An array of genenator names that nominee this feature structure to be the candidate of a certain targeted entity.</description>
+          <rangeTypeName>uima.cas.StringList</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>evidences</name>
+          <description>An array of evidences generated by evidencers for a particular GERP feature structure. Each element corresponds to the evidence from an evidencer.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.gerp.Evidence</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>ranks</name>
+          <description>An array of ranks generated by rankers for a particular GERP feature structure. Each element corresponds to the rank from a ranker.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.gerp.Rank</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>pruningDecisions</name>
+          <description>An array of purning decisions generated by pruners for a particular GERP feature structure. Each element corresponds to the pruning decision from a pruner. The final decision will be made by a multiplexer (or phrase driver).</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.gerp.PruningDecision</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.gerp.GerpAnnotation</name>
+      <description>A higher level supertype for all GERPified annotations that defines the common attributes (G/E/R/P).</description>
+      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>generators</name>
+          <description>An array of genenator names that nominee this feature structure to be the candidate of a certain targeted entity.</description>
+          <rangeTypeName>uima.cas.StringList</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>evidences</name>
+          <description>An array of evidences generated by evidencers for a particular GERP feature structure. Each element corresponds to the evidence from an evidencer.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.gerp.Evidence</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>ranks</name>
+          <description>An array of ranks generated by rankers for a particular GERP feature structure. Each element corresponds to the rank from a ranker.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.gerp.Rank</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>pruningDecisions</name>
+          <description>An array of purning decisions generated by pruners for a particular GERP feature structure. Each element corresponds to the pruning decision from a pruner. The final decision will be made by a multiplexer (or phrase driver).</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.gerp.PruningDecision</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.gerp.Evidence</name>
+      <description>A type represents the evidence for the candidate entities, which is provided by an evidencer.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpBase</supertypeName>
+      <features>
+        <featureDescription>
+          <name>confidence</name>
+          <description>A score that indicates how likely the evidencer estimates the entity is qualified for the task.</description>
+          <rangeTypeName>uima.cas.Float</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>additionalEvidences</name>
+          <description>Detailed evidences provided by the evidencer in addition to the confidence score, e.g. related document URIs where a text similarity based evidence is calculated.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.core.OAQATop</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.gerp.Rank</name>
+      <description>A type represents the rank for the candidate entities, which is normally done by a ranker's synthesized analysis of collected evidences.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpBase</supertypeName>
+      <features>
+        <featureDescription>
+          <name>rank</name>
+          <description>A non-negative integer represents the rank of candidate.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>score</name>
+          <description>A float value represents how likely the candidate is relevant. The value is not required to have a probabilistic interpretation, instead any similarity, distance, etc. can be used.</description>
           <rangeTypeName>uima.cas.Float</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
-      <name>org.oaqa.model.OAQAAnnotation</name>
-      <description>The Question Analysis supertype that defines the attributes common to all question analysis results.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <name>org.oaqa.model.gerp.PruningDecision</name>
+      <description>A type represents the pruning decision for the candidate entities, which is provided by a pruner.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpBase</supertypeName>
       <features>
         <featureDescription>
-          <name>componentId</name>
-          <description>The unique id of the component that created this instance.</description>
+          <name>decision</name>
+          <description>A binary pruning decision made by a pruner.</description>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.gerp.GerpMeta</name>
+      <description>A GERP-style component type, which contains some generators, evidencers, rankers and pruners, that capture the common metadata shared across the feature structures (GerpTops and GerpAnnotations) to be generated in the component, e.g. the name of all generators, evidencers, rankers and pruners.</description>
+      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>generators</name>
+          <description>An array of generator names.</description>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>evidencers</name>
+          <description>An array of evidencer names.</description>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>rankers</name>
+          <description>An array of ranker names.</description>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>pruners</name>
+          <description>An array of pruner names.</description>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.gerp.GerpBase</name>
+      <description>A base class for GERP intermediate data: Evidence, Rank, PruningDecision.</description>
+      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>comments</name>
+          <description>A placeholder for any additional comments that evidencers, rankers or pruners may provide.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.core.OAQATop</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.Search</name>
+      <description>An object that holds a query and results for a search (text search, fact search, KB search, etc.)</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>query</name>
+          <description>The query in the native syntax of the corresponding search engine.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>probability</name>
-          <description>The annotator's estimate of the probability associated with this annotation.</description>
-          <rangeTypeName>uima.cas.Float</rangeTypeName>
+          <name>hitList</name>
+          <description>Hit list of search results, sorted in descreasing order of relevance score.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.retrieval.SearchResult</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>abstractQuery</name>
+          <description>The abstract query from which this actual query was generated.</description>
+          <rangeTypeName>org.oaqa.model.retrieval.AbstractQuery</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>searchId</name>
+          <description>An identifier for this search result.  Used to collect hit-list objects that belong to this search result after they've been split out for parallel processing then gathered up again.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.answer.AnswerList</name>
+      <description>A ranked list of candidate answers.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>answerList</name>
+          <description>Hit list of candidate answers, rank ordered, with highest scoring answer first.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.answer.Answer</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.Parse</name>
+      <description>A data structure that represents various NLP annotations from a parser, e.g. lists of tokens, semantic roles, etc.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>tokens</name>
+          <description>A list of tokens.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.nlp.Token</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>semanticRoles</name>
+          <description>A list of semantic roles.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.nlp.SemanticRole</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.Concept</name>
+      <description>A superclass for EntityConcept and RelationConcept.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>name</name>
+          <description>The name of the concept.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>ids</name>
+          <description>Array of ids that identify this named entity.  There may be more than one id if this named entity is ambiguous.  The ids are typically URIs.</description>
+          <rangeTypeName>uima.cas.StringList</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>mentions</name>
+          <description>A list of ConceptMentions (text spans) that might be surface forms to this concept.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.neal.ConceptMention</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.ConceptMention</name>
+      <description>A superclass for EntityMention and RelationMention.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>concept</name>
+          <description>The abstract concept that the text span conveys.</description>
+          <rangeTypeName>org.oaqa.model.kb.Concept</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>id</name>
+          <description/>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>ontologyConceptArr</name>
+          <description/>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.nlp.OntologyConcept</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>typeID</name>
+          <description/>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>category</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.RelationMention</name>
+      <description>A named relation mention that identify or define the named relation concept.</description>
+      <supertypeName>org.oaqa.model.kb.ConceptMention</supertypeName>
+      <features>
+        <featureDescription>
+          <name>argumentMentions</name>
+          <description>A list of entity mentions being the arguments (e.g. sub, obj, etc.) of the relation mention.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.EntityMention</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>eventMention</name>
+          <description/>
+          <rangeTypeName>org.oaqa.model.kb.EventMention</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>semanticArgument</name>
+          <description/>
+          <rangeTypeName>org.oaqa.model.nlp.SemanticRole</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.Entity</name>
+      <description>An abstract normalized entity, which may have various surface forms (alternative representations).</description>
+      <supertypeName>org.oaqa.model.kb.Concept</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.Interpretation</name>
+      <description>A container that integrates Concepts and ConceptMentions.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>concepts</name>
+          <description>A list of all concepts mentioned in the corresponding text.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.Concept</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>mentions</name>
+          <description>A list of all mentions in the text.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.ConceptMention</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.doc.DocMeta</name>
+      <description>It stores the document meta data. Such as the name of document.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>docType</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>source</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>docID</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>author</name>
+          <description/>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>title</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>keyWordList</name>
+          <description/>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.Paragraph</name>
+      <description/>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>id</name>
+          <description/>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.Section</name>
+      <description/>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>title</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>depth</name>
+          <description/>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.Sentence</name>
+      <description/>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>sentenceNumber</name>
+          <description/>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>segmentId</name>
+      <description/>
+      <supertypeName>uima.cas.String</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.Segment</name>
+      <description/>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>id</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.Chunk</name>
+      <description/>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>chunkType</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.ADJP</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.ADVP</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.INTJ</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.LST</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.NP</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.O</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.PP</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.PRT</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.SBAR</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.UCP</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.VP</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.CONJP</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.Chunk</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.Lemma</name>
+      <description/>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>key</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>posTag</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.ConllDependencyNode</name>
+      <description/>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>id</name>
+          <description/>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>form</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>lemma</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>cpostag</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>postag</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>feats</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>head</name>
+          <description/>
+          <rangeTypeName>org.oaqa.model.nlp.ConllDependencyNode</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>deprel</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>phead</name>
+          <description/>
+          <rangeTypeName>org.oaqa.model.nlp.ConllDependencyNode</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>pdeprel</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.LookupWindowAnnotation</name>
+      <description/>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.OntologyConcept</name>
+      <description/>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>codingScheme</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>code</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>oid</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>oui</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.UmlsConcept</name>
+      <description/>
+      <supertypeName>org.oaqa.model.nlp.OntologyConcept</supertypeName>
+      <features>
+        <featureDescription>
+          <name>cui</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>tui</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.EventMention</name>
+      <description/>
+      <supertypeName>org.oaqa.model.kb.ConceptMention</supertypeName>
+      <features>
+        <featureDescription>
+          <name>relations</name>
+          <description/>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.RelationMention</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>frameSet</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.Event</name>
+      <description/>
+      <supertypeName>org.oaqa.model.kb.Concept</supertypeName>
     </typeDescription>
   </types>
 </typeSystemDescription>

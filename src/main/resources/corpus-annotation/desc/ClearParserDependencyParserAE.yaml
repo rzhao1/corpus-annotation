@@ -1,0 +1,7 @@
+class: edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.ClearParserDependencyParserAE
+ParserModelFileName: org/apache/ctakes/dependency/parser/models/dependency/conll-2009-dev-shift-pop.jar
+ParserAlgorithmName: shift-pop
+UseLemmatizer: true
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

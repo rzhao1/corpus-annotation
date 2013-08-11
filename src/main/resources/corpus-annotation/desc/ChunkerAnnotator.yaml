@@ -1,0 +1,7 @@
+class:  edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.Chunker
+ChunkerModelFile: org/apache/ctakes/chunker/models/chunk-model.claims-1.5.zip
+ChunkCreatorClass: edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.PhraseTypeChunkCreator
+
+ 
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

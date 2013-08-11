@@ -1,0 +1,17 @@
+class: edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.LvgTokenAnnotator
+ModelFilePath: org/apache/ctakes/lvg/data/config/lvg.properties
+UseSegments: false
+SegmentsToSkip: ['0'] 
+UseCmdCache: false
+CmdCacheFileLocation: org/apache/ctakes/lvg/2005_norm.voc
+CmdCacheFrequencyCutoff: 20
+ExclusionSet: ['and','And','by','By','for','For','in','In','of','Of','on','On','the','The','to','To','with','With']
+XeroxTreebankMap: ['adj|JJ','adv|RB','aux|AUX','compl|CS','conj|CC','det|DET','modal|MD','noun|NN','prep|IN','pron|PRP','verb|VB']
+PostLemmas: true
+UseLemmaCache: false
+LemmaCacheFileLocation: /ctakes-lvg/2005_lemma.voc
+LemmaCacheFrequencyCutoff: 20
+ 
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

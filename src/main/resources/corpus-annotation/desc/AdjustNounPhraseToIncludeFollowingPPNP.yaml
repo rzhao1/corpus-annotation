@@ -1,0 +1,6 @@
+class: edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.ChunkAdjuster
+ChunkPattern: ['NP','PP','NP']
+IndexOfTokenToInclude: 2
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

@@ -1,0 +1,7 @@
+class: edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.CopyAnnotator
+srcObjClass: org.oaqa.model.nlp.NP
+destObjClass: org.oaqa.model.nlp.LookupWindowAnnotation
+dataBindMap: ['getBegin|setBegin','getEnd|setEnd']
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

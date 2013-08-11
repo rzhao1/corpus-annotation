@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="target/classes" path="src/main/java">
+	<classpathentry kind="src" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+	<classpathentry excluding="**" kind="src" path="src/main/resources">
 		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/ranzhao/Desktop/UIMA_Project/apache-uima/lib/jVinci.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Desktop/UIMA_Project/apache-uima/lib/uima-adapter-soap.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Desktop/UIMA_Project/apache-uima/lib/uima-adapter-vinci.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Desktop/UIMA_Project/apache-uima/lib/uima-core.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Desktop/UIMA_Project/apache-uima/lib/uima-cpe.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Desktop/UIMA_Project/apache-uima/lib/uima-document-annotation.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Desktop/UIMA_Project/apache-uima/lib/uima-examples.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Desktop/UIMA_Project/apache-uima/lib/uima-tools.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Desktop/UIMA_Project/apache-uima/lib/uimaj-bootstrap.jar"/>
+	<classpathentry kind="src" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -21,5 +36,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/hw1-rzhao1-ziy-proto/lib/lingpipe-4.1.0.jar"/>
+	<classpathentry kind="lib" path="resources"/>
+	<classpathentry kind="lib" path="doc"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
