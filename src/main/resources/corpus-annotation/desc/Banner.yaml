@@ -1,0 +1,7 @@
+class:  edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.Banner
+PropertiesFile: banner/banner.properties
+Gene_Model_file: banner/gene_model_v02.bin
+
+ 
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

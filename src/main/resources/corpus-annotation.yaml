@@ -12,10 +12,10 @@ pipeline:
      
      - inherit: corpus-annotation.desc.TokenAnnotator
      
-     - inherit: corpus-annotation.desc.PosTagger
+     - inherit: corpus-annotation.desc.PosTagger 
      
      - inherit: corpus-annotation.desc.ChunkerAnnotator
-     
+    
      - inherit: corpus-annotation.desc.AdjustNounPhraseToIncludeFollowingNP
      
      - inherit: corpus-annotation.desc.AdjustNounPhraseToIncludeFollowingPPNP
@@ -25,14 +25,13 @@ pipeline:
      - inherit: corpus-annotation.desc.MaxLookupWindows
      
      - inherit: corpus-annotation.desc.LvgTokenAnnotator
-
-  #   - inherit: corpus-annotation.desc.DictionaryLookupAnnotator
      
      - inherit: ecd.phase
        name: NameEntity Recognition
        options: |
          - inherit: corpus-annotation.desc.GeneTagAnnotator  
-         - inherit: corpus-annotation.desc.UmlsDictionaryLookupAnnotator    
+         - inherit: corpus-annotation.desc.UmlsDictionaryLookupAnnotator
+         - inherit: corpus-annotation.desc.Banner    
      
      - inherit: corpus-annotation.desc.ClearParserDependencyParserAE
      

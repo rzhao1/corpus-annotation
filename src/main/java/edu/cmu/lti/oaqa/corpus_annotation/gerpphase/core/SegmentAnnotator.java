@@ -39,7 +39,6 @@ public class SegmentAnnotator extends JCasAnnotator_ImplBase {
     Segment segment = new Segment(jCas);
     segment.setBegin(0);
     String text = jCas.getDocumentText();
-
     if (text == null) {
       String docId = DocumentIDAnnotationUtil.getDocumentID(jCas);
       throw new AnalysisEngineProcessException("text is null for docId=" + docId, null);

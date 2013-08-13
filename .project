@@ -27,4 +27,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.apache.uima.pear.UimaNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>banner</name>
+			<type>2</type>
+			<location>/Users/ranzhao/Documents/workspace/BANNER</location>
+		</link>
+	</linkedResources>
 </projectDescription>

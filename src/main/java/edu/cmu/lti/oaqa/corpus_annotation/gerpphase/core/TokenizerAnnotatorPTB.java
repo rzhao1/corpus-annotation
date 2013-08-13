@@ -167,6 +167,7 @@ public class TokenizerAnnotatorPTB extends JCasAnnotator_ImplBase {
     FSIterator<?> sentencesIter = indexes.getAnnotationIndex(Sentence.type).iterator();
     // Tokenize each sentence, adding the tokens to the cas index
     while (sentencesIter.hasNext()) {
+    
       Sentence sentence = (Sentence) sentencesIter.next();
       if (sentence.getBegin() < rangeBegin || sentence.getEnd() > rangeEnd) {
         continue;

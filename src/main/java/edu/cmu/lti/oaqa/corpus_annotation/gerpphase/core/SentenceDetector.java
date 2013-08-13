@@ -137,7 +137,7 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
 
       if (!skipSegmentsSet.contains(sectionID)) {
         sentenceCount = annotateRange(jcas, text, sa, sentenceCount);
-        System.out.println(sentenceCount);
+        System.out.println("The total sentence number is "+sentenceCount);
       }
     }
   }
