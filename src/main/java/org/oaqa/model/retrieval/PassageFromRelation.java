@@ -11,7 +11,7 @@ import org.oaqa.model.kb.Relation;
 
 
 /** A passage search result that was the result of a search from the subject and object of a triple
- * Updated by JCasGen Thu Aug 08 15:17:07 EDT 2013
+ * Updated by JCasGen Tue Aug 13 23:03:26 EDT 2013
  * XML source: /Users/ranzhao/git/corpus-annotation/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class PassageFromRelation extends Passage {

@@ -12,7 +12,7 @@ import org.apache.uima.jcas.cas.StringArray;
 
 
 /** It stores the document meta data. Such as the name of document.
- * Updated by JCasGen Thu Aug 08 15:17:07 EDT 2013
+ * Updated by JCasGen Tue Aug 13 23:03:25 EDT 2013
  * XML source: /Users/ranzhao/git/corpus-annotation/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class DocMeta extends GerpTop {

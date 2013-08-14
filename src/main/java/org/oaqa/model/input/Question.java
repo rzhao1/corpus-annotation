@@ -11,7 +11,7 @@ import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** The Question and any associated meta-data.
- * Updated by JCasGen Thu Aug 08 15:17:07 EDT 2013
+ * Updated by JCasGen Tue Aug 13 23:03:25 EDT 2013
  * XML source: /Users/ranzhao/git/corpus-annotation/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class Question extends GerpAnnotation {

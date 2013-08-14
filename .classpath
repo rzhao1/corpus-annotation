@@ -45,5 +45,9 @@
 	<classpathentry kind="lib" path="/Users/ranzhao/Documents/workspace/BANNER/libs/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="/Users/ranzhao/Documents/workspace/BANNER/libs/mallet.jar"/>
 	<classpathentry kind="lib" path="/Users/ranzhao/Documents/workspace/BANNER/libs/medpost.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Downloads/fanseparser/fanseparser-0.2.2.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Downloads/fanseparser/finegrainconverter-0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Downloads/fanseparser/pennconverter_modified.jar"/>
+	<classpathentry kind="lib" path="/Users/ranzhao/Downloads/fanseparser/ModifiedYamadaHeadFinder(withTratz&amp;Hovy2011changes).zip"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

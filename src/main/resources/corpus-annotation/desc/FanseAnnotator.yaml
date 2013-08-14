@@ -1,0 +1,15 @@
+class:  edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.FanseAnnotator
+posTaggingModel: fansemodel/posTaggingModel.gz
+parseModel: fansemodel/parseModel.gz
+possessivesModel: fansemodel/possessivesModel.gz
+nnModel: fansemodel/nnModel.gz
+srlArgsWrapper: fansemodel/srlArgsWrapper.gz
+srlPredWrapper: fansemodel/srlPredWrapper.gz
+psdModels: fansemodel/psdModels.gz
+wordnet: data/wordnet3
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider
+ 
+
+         

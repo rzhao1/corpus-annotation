@@ -32,10 +32,13 @@ pipeline:
          - inherit: corpus-annotation.desc.GeneTagAnnotator  
          - inherit: corpus-annotation.desc.UmlsDictionaryLookupAnnotator
          - inherit: corpus-annotation.desc.Banner    
+      
      
-     - inherit: corpus-annotation.desc.ClearParserDependencyParserAE
+     - inherit: corpus-annotation.desc.FanseAnnotator
+            
+#     - inherit: corpus-annotation.desc.ClearParserDependencyParserAE
      
-     - inherit: corpus-annotation.desc.ClearParserSemanticRoleLabelerAE
+#     - inherit: corpus-annotation.desc.ClearParserSemanticRoleLabelerAE
 
      - inherit: corpus-annotation.cas_consumer.XmiWriterCasConsumer
      

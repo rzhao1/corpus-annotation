@@ -12,7 +12,7 @@ import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** A semantic role label.
- * Updated by JCasGen Thu Aug 08 15:17:07 EDT 2013
+ * Updated by JCasGen Tue Aug 13 23:03:25 EDT 2013
  * XML source: /Users/ranzhao/git/corpus-annotation/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class SemanticRole extends GerpAnnotation {

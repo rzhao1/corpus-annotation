@@ -68,20 +68,7 @@ public class Banner extends JCasAnnotator_ImplBase {
       modelFile=cl.getResource((String) uimaContext.getConfigParameterValue(MODELFILE)).getPath();
       System.out.println("propertiesFile"+propertiesFile);
       System.out.println("modelFile"+modelFile);
-     //  File chunkerModelFile = FileLocator.locateFile(tagFile);
-      // InputStream fis = new FileInputStream(chunkerModelFile);
-      // ChunkerModel model = new ChunkerModel(fis);
-      // String chunkerModelAbsPath = chunkerModelFile.getAbsolutePath();
-      // logger.info("Chunker model file: " + chunkerModelAbsPath);
-      //
-      // chunker = new opennlp.tools.chunker.ChunkerME(model);
-      //
-      // String chunkerCreatorClassName = (String) uimaContext
-      // .getConfigParameterValue(CHUNKER_CREATOR_CLASS_PARAM);
-      //
-      // chunkerCreator = (ChunkCreator) Class.forName(chunkerCreatorClassName).newInstance();
-      // chunkerCreator.initialize(uimaContext);
-
+     
     } catch (Exception e) {
 
       throw new ResourceInitializationException(e);
