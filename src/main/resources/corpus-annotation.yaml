@@ -12,33 +12,33 @@ pipeline:
      
      - inherit: corpus-annotation.desc.TokenAnnotator
      
-     - inherit: corpus-annotation.desc.PosTagger 
+#     - inherit: corpus-annotation.desc.PosTagger 
      
-     - inherit: corpus-annotation.desc.ChunkerAnnotator
+#     - inherit: corpus-annotation.desc.ChunkerAnnotator
     
-     - inherit: corpus-annotation.desc.AdjustNounPhraseToIncludeFollowingNP
+#     - inherit: corpus-annotation.desc.AdjustNounPhraseToIncludeFollowingNP
      
-     - inherit: corpus-annotation.desc.AdjustNounPhraseToIncludeFollowingPPNP
+#     - inherit: corpus-annotation.desc.AdjustNounPhraseToIncludeFollowingPPNP
      
-     - inherit: corpus-annotation.desc.NP2LookupWindow
+#     - inherit: corpus-annotation.desc.NP2LookupWindow
      
-     - inherit: corpus-annotation.desc.MaxLookupWindows
+#     - inherit: corpus-annotation.desc.MaxLookupWindows
      
-     - inherit: corpus-annotation.desc.LvgTokenAnnotator
+#     - inherit: corpus-annotation.desc.LvgTokenAnnotator
      
-     - inherit: ecd.phase
-       name: NameEntity Recognition
-       options: |
-         - inherit: corpus-annotation.desc.GeneTagAnnotator  
-         - inherit: corpus-annotation.desc.UmlsDictionaryLookupAnnotator
-         - inherit: corpus-annotation.desc.Banner    
-      
-     
-     - inherit: corpus-annotation.desc.FanseAnnotator
+#     - inherit: ecd.phase
+#       name: NameEntity Recognition
+#       options: |
+#         - inherit: corpus-annotation.desc.GeneTagAnnotator  
+#         - inherit: corpus-annotation.desc.UmlsDictionaryLookupAnnotator
+#         - inherit: corpus-annotation.desc.Banner    
+        
+#     - inherit: corpus-annotation.desc.FanseAnnotator
             
 #     - inherit: corpus-annotation.desc.ClearParserDependencyParserAE
      
 #     - inherit: corpus-annotation.desc.ClearParserSemanticRoleLabelerAE
 
+     - inherit: corpus-annotation.desc.SemaforAnnotator
      - inherit: corpus-annotation.cas_consumer.XmiWriterCasConsumer
      

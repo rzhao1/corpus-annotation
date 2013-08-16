@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<styleMap>
+<rule>
+<pattern>org.oaqa.model.core.OAQATop</pattern>
+<label>OAQATop</label>
+<style>color:black; background:lightblue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.core.OAQAAnnotation</pattern>
+<label>OAQAAnnotation</label>
+<style>color:black; background:lightgreen;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.Token</pattern>
+<label>Token</label>
+<style>color:black; background:orange;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.Focus</pattern>
+<label>Focus</label>
+<style>color:black; background:yellow;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.LexicalAnswerType</pattern>
+<label>LexicalAnswerType</label>
+<style>color:black; background:pink;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.AnswerType</pattern>
+<label>AnswerType</label>
+<style>color:black; background:salmon;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.SemanticRole</pattern>
+<label>SemanticRole</label>
+<style>color:black; background:cyan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.input.Question</pattern>
+<label>Question</label>
+<style>color:black; background:violet;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.SearchResult</pattern>
+<label>SearchResult</label>
+<style>color:black; background:tan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.answer.Answer</pattern>
+<label>Answer</label>
+<style>color:white; background:brown;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.Passage</pattern>
+<label>Passage</label>
+<style>color:white; background:blue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.CandidateAnswerOccurrence</pattern>
+<label>CandidateAnswerOccurrence</label>
+<style>color:white; background:green;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.answer.CandidateAnswerVariant</pattern>
+<label>CandidateAnswerVariant</label>
+<style>color:white; background:red;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.input.QuestionType</pattern>
+<label>QuestionType</label>
+<style>color:white; background:mediumpurple;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.QueryConcept</pattern>
+<label>QueryConcept</label>
+<style>color:black; background:lightblue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.QueryOperator</pattern>
+<label>QueryOperator</label>
+<style>color:black; background:lightgreen;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.AbstractQuery</pattern>
+<label>AbstractQuery</label>
+<style>color:black; background:orange;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.ConceptType</pattern>
+<label>ConceptType</label>
+<style>color:black; background:yellow;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.QueryOperatorName</pattern>
+<label>QueryOperatorName</label>
+<style>color:black; background:pink;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.Document</pattern>
+<label>Document</label>
+<style>color:black; background:salmon;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.AnswerSearchResult</pattern>
+<label>AnswerSearchResult</label>
+<style>color:black; background:cyan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.RelationSearchResult</pattern>
+<label>RelationSearchResult</label>
+<style>color:black; background:violet;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.Relation</pattern>
+<label>Relation</label>
+<style>color:black; background:tan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.EntityMention</pattern>
+<label>EntityMention</label>
+<style>color:white; background:brown;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.PassageFromRelation</pattern>
+<label>PassageFromRelation</label>
+<style>color:white; background:blue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.gerp.GerpTop</pattern>
+<label>GerpTop</label>
+<style>color:white; background:green;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.gerp.GerpAnnotation</pattern>
+<label>GerpAnnotation</label>
+<style>color:white; background:red;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.gerp.Evidence</pattern>
+<label>Evidence</label>
+<style>color:white; background:mediumpurple;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.gerp.Rank</pattern>
+<label>Rank</label>
+<style>color:black; background:lightblue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.gerp.PruningDecision</pattern>
+<label>PruningDecision</label>
+<style>color:black; background:lightgreen;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.gerp.GerpMeta</pattern>
+<label>GerpMeta</label>
+<style>color:black; background:orange;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.gerp.GerpBase</pattern>
+<label>GerpBase</label>
+<style>color:black; background:yellow;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.retrieval.Search</pattern>
+<label>Search</label>
+<style>color:black; background:pink;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.answer.AnswerList</pattern>
+<label>AnswerList</label>
+<style>color:black; background:salmon;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.Parse</pattern>
+<label>Parse</label>
+<style>color:black; background:cyan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.Concept</pattern>
+<label>Concept</label>
+<style>color:black; background:violet;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.ConceptMention</pattern>
+<label>ConceptMention</label>
+<style>color:black; background:tan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.RelationMention</pattern>
+<label>RelationMention</label>
+<style>color:white; background:brown;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.Entity</pattern>
+<label>Entity</label>
+<style>color:white; background:blue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.Interpretation</pattern>
+<label>Interpretation</label>
+<style>color:white; background:green;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.doc.DocMeta</pattern>
+<label>DocMeta</label>
+<style>color:white; background:red;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.Paragraph</pattern>
+<label>Paragraph</label>
+<style>color:white; background:mediumpurple;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.Section</pattern>
+<label>Section</label>
+<style>color:black; background:lightblue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.Sentence</pattern>
+<label>Sentence</label>
+<style>color:black; background:lightgreen;</style>
+</rule>
+<rule>
+<pattern>segmentId</pattern>
+<label>segmentId</label>
+<style>color:black; background:orange;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.Segment</pattern>
+<label>Segment</label>
+<style>color:black; background:yellow;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.Chunk</pattern>
+<label>Chunk</label>
+<style>color:black; background:pink;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.ADJP</pattern>
+<label>ADJP</label>
+<style>color:black; background:salmon;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.ADVP</pattern>
+<label>ADVP</label>
+<style>color:black; background:cyan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.INTJ</pattern>
+<label>INTJ</label>
+<style>color:black; background:violet;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.LST</pattern>
+<label>LST</label>
+<style>color:black; background:tan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.NP</pattern>
+<label>NP</label>
+<style>color:white; background:brown;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.O</pattern>
+<label>O</label>
+<style>color:white; background:blue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.PP</pattern>
+<label>PP</label>
+<style>color:white; background:green;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.PRT</pattern>
+<label>PRT</label>
+<style>color:white; background:red;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.SBAR</pattern>
+<label>SBAR</label>
+<style>color:white; background:mediumpurple;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.UCP</pattern>
+<label>UCP</label>
+<style>color:black; background:lightblue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.VP</pattern>
+<label>VP</label>
+<style>color:black; background:lightgreen;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.CONJP</pattern>
+<label>CONJP</label>
+<style>color:black; background:orange;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.Lemma</pattern>
+<label>Lemma</label>
+<style>color:black; background:yellow;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.ConllDependencyNode</pattern>
+<label>ConllDependencyNode</label>
+<style>color:black; background:pink;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.LookupWindowAnnotation</pattern>
+<label>LookupWindowAnnotation</label>
+<style>color:black; background:salmon;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.OntologyConcept</pattern>
+<label>OntologyConcept</label>
+<style>color:black; background:cyan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.UmlsConcept</pattern>
+<label>UmlsConcept</label>
+<style>color:black; background:violet;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.EventMention</pattern>
+<label>EventMention</label>
+<style>color:black; background:tan;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.Event</pattern>
+<label>Event</label>
+<style>color:white; background:brown;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.FanseDependencyRelation</pattern>
+<label>FanseDependencyRelation</label>
+<style>color:white; background:blue;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.kb.FanseSemanticRelation</pattern>
+<label>FanseSemanticRelation</label>
+<style>color:white; background:green;</style>
+</rule>
+<rule>
+<pattern>org.oaqa.model.nlp.FanseToken</pattern>
+<label>FanseToken</label>
+<style>color:white; background:red;</style>
+</rule>
+<rule>
+<pattern>edu.cmu.lti.event_coref.type.SemaforLabel</pattern>
+<label>SemaforLabel</label>
+<style>color:white; background:mediumpurple;</style>
+</rule>
+<rule>
+<pattern>edu.cmu.lti.event_coref.type.SemaforLayer</pattern>
+<label>SemaforLayer</label>
+<style>color:black; background:lightblue;</style>
+</rule>
+<rule>
+<pattern>edu.cmu.lti.event_coref.type.SemaforAnnotationSet</pattern>
+<label>SemaforAnnotationSet</label>
+<style>color:black; background:lightgreen;</style>
+</rule>
+<rule>
+<pattern>edu.cmu.lti.event_coref.type.SemaforParse</pattern>
+<label>SemaforParse</label>
+<style>color:black; background:orange;</style>
+</rule>
+<rule>
+<pattern>edu.cmu.lti.event_coref.type.SemaforToken</pattern>
+<label>SemaforToken</label>
+<style>color:black; background:yellow;</style>
+</rule>
+</styleMap>
+

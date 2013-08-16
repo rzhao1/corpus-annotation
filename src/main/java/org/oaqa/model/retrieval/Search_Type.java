@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** An object that holds a query and results for a search (text search, fact search, KB search, etc.)
- * Updated by JCasGen Tue Aug 13 23:03:26 EDT 2013
+ * Updated by JCasGen Wed Aug 14 15:53:56 EDT 2013
  * @generated */
 public class Search_Type extends GerpTop_Type {
   /** @generated */

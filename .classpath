@@ -29,16 +29,6 @@
 	<classpathentry kind="lib" path="/hw1-rzhao1-ziy-proto/lib/lingpipe-4.1.0.jar"/>
 	<classpathentry kind="lib" path="resources"/>
 	<classpathentry kind="lib" path="doc"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/BANNER"/>
 	<classpathentry kind="lib" path="/Users/ranzhao/Documents/workspace/BANNER/libs/dragontool.jar"/>
 	<classpathentry kind="lib" path="/Users/ranzhao/Documents/workspace/BANNER/libs/heptag.jar"/>
@@ -49,5 +39,15 @@
 	<classpathentry kind="lib" path="/Users/ranzhao/Downloads/fanseparser/finegrainconverter-0.1.jar"/>
 	<classpathentry kind="lib" path="/Users/ranzhao/Downloads/fanseparser/pennconverter_modified.jar"/>
 	<classpathentry kind="lib" path="/Users/ranzhao/Downloads/fanseparser/ModifiedYamadaHeadFinder(withTratz&amp;Hovy2011changes).zip"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

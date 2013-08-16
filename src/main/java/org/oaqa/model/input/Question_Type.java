@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpAnnotation_Type;
 
 /** The Question and any associated meta-data.
- * Updated by JCasGen Tue Aug 13 23:03:25 EDT 2013
+ * Updated by JCasGen Wed Aug 14 15:53:56 EDT 2013
  * @generated */
 public class Question_Type extends GerpAnnotation_Type {
   /** @generated */

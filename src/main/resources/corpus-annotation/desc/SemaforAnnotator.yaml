@@ -1,0 +1,10 @@
+class:  edu.cmu.lti.oaqa.corpus_annotation.gerpphase.core.SemaforAnnotator
+Semafor_tmpdir: /Users/ranzhao/git/corpus-annotation/resources/data/semafor-tmpdir
+Semafor_command: ./fnParserDriverMalt.sh
+Semafor_home: /Users/ranzhao/Documents/Semafor-mid/bin
+Shell_path: /bin/sh
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider
+ 
+       

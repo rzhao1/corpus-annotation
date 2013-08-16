@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A query concept in the abstract search query model.
- * Updated by JCasGen Tue Aug 13 23:03:26 EDT 2013
+ * Updated by JCasGen Wed Aug 14 15:53:56 EDT 2013
  * XML source: /Users/ranzhao/git/corpus-annotation/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class QueryConcept extends GerpTop {
